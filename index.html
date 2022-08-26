@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body class="d-flex justify-content-center align-items-center">
-  <main>
+  <main class="d-flex-column justify-content-center text-center">
   <header>
     <h1 class="fs-2">Consultar CEP</h1>
   </header>
@@ -24,10 +24,15 @@
       <button class="btn btn-success btn-sm text-wrap" id="consult">Consultar</button>
     </form>
     <p id="error" class="text-center mt-2" style="color: red; font-size:12px;"></p>
-    <section class="text-center">
-      content
-    </section>
   </main>
+  <section id="newAddresses" class="text-center">
+      <section id="addresses" class="text-center">
+
+      </section>
+  </section>
+  <div id="hiddenButton" hidden="hidden">
+    <button class="btn btn-danger btn-sm text-wrap mt-4" id="consult">Excluir Todos</button>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 <script src ="script.js"></script>

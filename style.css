@@ -5,5 +5,15 @@
 }
 
 body{
-  height: 100vh
+  height: 100vh;
+  display:flex;
+  flex-direction: column;
+}
+
+main{
+  max-width: 30%
+}
+
+form{
+  max-width: 100%
 }
