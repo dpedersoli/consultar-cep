@@ -4,16 +4,21 @@
   box-sizing: border-box;
 }
 
-body{
-  height: 100vh;
-  display:flex;
-  flex-direction: column;
+header {
+  padding: 10px 5px 0px 5px;
+}
+
+h1{
+  font-weight: bold;
+  color: ;
 }
 
 main{
-  max-width: 30%
+  height: 100vh;
+  background-color: lightgrey;
 }
 
-form{
-  max-width: 100%
+#consult{
+  margin-left: 2px;
+  height: 32px
 }
