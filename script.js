@@ -1,28 +1,113 @@
 const error = document.getElementById("error")
 const btn = document.getElementById("consult")
-const teste = document.getElementById("teste")
+const addresses = document.getElementById("addresses")
+const hiddenButton = document.getElementById("hiddenButton")
+const url = "http://localhost:3000/enderecos"
 
-//fazer o 'forEach(itens) => {itens}' da 'colinha' aqui
-const populateTable = (address) => {
-  teste.innerHTML = ''
+const render = (address) => {
+  addresses.innerHTML = ''
 
-  for(const itens in address) {
-    const validando = `
-      <span>${itens} ${address[itens]}</span>
-      <br />
+  address.forEach((data) => {
+    const addNewAddress = `
+    <div class="d-flex justify-content-center align-items-center text-center w-full">
+      <p><strong style="font-size: 20px; color: #AF29AF;">${data.cep}</strong> ${data.logradouro} <strong>${data.localidade}</strong> ${data.bairro} </p>
+      <button id="deleteOne" class="btn btn-danger btn-sm text-wrap mt-4"><i class="bi bi-trash"></i></button>
+    </div>
     `
-    
-    teste.innerHTML += validando
-  }
+    addresses.innerHTML += addNewAddress 
+
+    if (data) {
+      hiddenButton.removeAttribute("hidden")
+    }
+  })
+
+
 }
 
-const consult = async (e) => {
-  e.preventDefault()
+const populateTable = (address) => {
 
-  const cep = document.getElementById("cep").value
-  const url = `http://viacep.com.br/ws/${cep}/json/`
-  const newAddress = {
-    cep: "",
+  const lastAddress = address[address.length - 1]
+
+  const addNewAddress = `
+    <div class="d-flex justify-content-center align-items-center text-center w-full">
+      <p><strong style="font-size: 20px; color: #AF29AF;">${lastAddress.cep}</strong> ${lastAddress.logradouro} <strong>${lastAddress.localidade}</strong> ${lastAddress.bairro} </p>
+      <button id="deleteOne" class="btn btn-danger btn-sm text-wrap mt-4"><i class="bi bi-trash"></i></button>
+    </div>
+    `
+  addresses.innerHTML += addNewAddress 
+     
+  hiddenButton.removeAttribute("hidden")
+
+    //validar ceps repetidos com error de retorno ///////////////////////////////////////////////////////////////////////////
+    // if(formattedCEPChecker.includes(cep)){
+    //   return error.innerText = 'Esse CEP já está na tabela'
+    // }
+
+  }
+
+
+
+  //exluir 1 (só passar o 'remove()') ///////////////////////////////////////////////////////////////////////////
+  //alinhar /////////////////////////////////////////////////////////////////////////// 
+  
+//exluir todos do visual
+const deleteAllFromTable = () => {
+  addresses.innerHTML = ''
+  hiddenButton.setAttribute("hidden", "hidden");
+}
+
+//exluir todos do DB ///////////////////////////////////////////////////////////////////////////
+async function deleteAllFromDB (e, id) {
+  e.preventDefault();
+
+  await fetch(`${url}/${id}`)
+
+}
+
+
+async function getRenderData () {
+
+  await fetch(url)
+  .then((response) => {
+    response.json()
+    .then((data) =>{
+      render(data)
+    })
+  })
+}
+
+async function getData () {
+
+  await fetch(url)
+  .then((response) => {
+    response.json()
+    .then((data) =>{
+      populateTable(data)
+    })
+  })
+}
+
+async function postData (address) {
+
+  await fetch(url, {
+  method: "POST",
+  headers: {"Content-Type": "application/json;charset=UTF-8"},
+  body: JSON.stringify(address),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    getData(data)
+  })
+  
+}
+
+  const consult = async (e) => {
+    e.preventDefault()
+    
+    const cep = document.getElementById("cep").value
+    const url = `http://viacep.com.br/ws/${cep}/json/`
+    const newAddress = {
+      cep: "",
     logradouro: "",
     bairro: "",
     localidade: "",
@@ -44,7 +129,13 @@ const consult = async (e) => {
         newAddress.logradouro = data.logradouro
         newAddress.bairro = data.bairro
         newAddress.localidade = data.localidade
-        populateTable(data)
+
+        if (!data.cep){
+          return error.innerText = 'Insira um CEP válido'
+        } else {
+          // populateTable(data)
+          postData(data)
+        }
       })
     }
   })
@@ -53,4 +144,6 @@ const consult = async (e) => {
   return
 }
 
+hiddenButton.addEventListener("click", deleteAllFromTable)
 btn.addEventListener("click", consult)
+getRenderData()

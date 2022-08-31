@@ -6,11 +6,12 @@
 
 header {
   padding: 10px 5px 0px 5px;
+  height: 15vh;
 }
 
 h1{
   font-weight: bold;
-  color: ;
+  color: #AF29AF;
 }
 
 main{
@@ -18,7 +19,16 @@ main{
   background-color: lightgrey;
 }
 
+.form-control {
+  margin: 0px;
+}
+
 #consult{
   margin-left: 2px;
   height: 32px
+}
+
+#error{
+  padding: 0px;
+  margins: 0px;
 }

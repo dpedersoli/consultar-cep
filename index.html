@@ -9,31 +9,34 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="./style.css">
 </head>
-<body class="d-flex-column stify-content-center align-items-center">
-  <header class="d-flex justify-content-between">
+<body class="d-flex-column justify-content-center align-items-center">
+  <header class="d-flex justify-content-between align-items-center">
     <h1 class="fs-2">Consultar CEP</h1>
-    <form class="d-flex justify-content-center text-center">
-      <div class="mb-3">
-        <label for="cep" class="form-label" hidden="hidden">CEP</label>
-        <div class="input-group input-group-sm">
-          <span for="cep" class="input-group-text" id="inputGroup-sizing-sm">CEP</span>
-          <input type="text" class="form-control" id="cep" maxlength="8">
+    <div class="d-flex-column justify-content-center align-items-center">
+      <form class="d-flex">
+        <div class="mb-3">
+          <label for="cep" class="form-label" hidden="hidden">CEP</label>
+          <div class="input-group input-group-sm">
+            <span for="cep" class="input-group-text" id="inputGroup-sizing-sm">CEP</span>
+            <input type="text" class="form-control" id="cep" maxlength="8">
+          </div>
         </div>
-      </div>
-      <div>
-      </div>
-      
-      <button class="btn btn-success btn-sm text-wrap" id="consult"><i class="bi bi-search"></i></button>
-    </form>
+        <div>
+        </div>
+        
+        <button class="btn btn-success btn-sm text-wrap" id="consult"><i class="bi bi-search"></i></button>
+      </form>
+      <p id="error" class="text-center mt-2" style="color: red; font-size:12px;"></p>
+    </div>
   </header>
-  <main class="d-flex justify-content-center align-items-center text-center">
-    <p id="error" class="text-center mt-2" style="color: red; font-size:12px;"></p>
-    <section id="newAddresses" class="text-center">
-
+  <main class="d-flex-column justify-content-center align-items-center text-center">
+    <section id="addresses" class="d-flex-column justify-content-center align-items-center text-center">
+      
     </section>
 
     <div id="hiddenButton" hidden="hidden">
-      <button class="btn btn-danger btn-sm text-wrap mt-4" id="consult">Excluir Todos</button>
+      <button class="btn btn-danger btn-sm text-wrap mt-4" id="consult">Excluir Todos <i class="bi bi-trash"></i>
+      </button>
     </div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
