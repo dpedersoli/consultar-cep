@@ -9,7 +9,7 @@ const render = (address) => {
 
   address.forEach((data) => {
     const addNewAddress = `
-    <div class="d-flex justify-content-center align-items-center text-center w-full">
+    <div id=${data.id} class="d-flex justify-content-center align-items-center text-center w-full">
       <p><strong style="font-size: 20px; color: #AF29AF;">${data.cep}</strong> ${data.logradouro} <strong>${data.localidade}</strong> ${data.bairro} </p>
       <button id="deleteOne" class="btn btn-danger btn-sm text-wrap mt-4"><i class="bi bi-trash"></i></button>
     </div>
@@ -29,12 +29,14 @@ const populateTable = (address) => {
   const lastAddress = address[address.length - 1]
 
   const addNewAddress = `
-    <div class="d-flex justify-content-center align-items-center text-center w-full">
+    <div id=${lastAddress.id} class="d-flex justify-content-center align-items-center text-center w-full">
       <p><strong style="font-size: 20px; color: #AF29AF;">${lastAddress.cep}</strong> ${lastAddress.logradouro} <strong>${lastAddress.localidade}</strong> ${lastAddress.bairro} </p>
       <button id="deleteOne" class="btn btn-danger btn-sm text-wrap mt-4"><i class="bi bi-trash"></i></button>
     </div>
     `
-  addresses.innerHTML += addNewAddress 
+  addresses.innerHTML += addNewAddress
+
+  console.log(lastAddress.id)
      
   hiddenButton.removeAttribute("hidden")
 
@@ -49,19 +51,18 @@ const populateTable = (address) => {
 
   //exluir 1 (só passar o 'remove()') ///////////////////////////////////////////////////////////////////////////
   //alinhar /////////////////////////////////////////////////////////////////////////// 
-  
-//exluir todos do visual
-const deleteAllFromTable = () => {
-  addresses.innerHTML = ''
-  hiddenButton.setAttribute("hidden", "hidden");
-}
 
-//exluir todos do DB ///////////////////////////////////////////////////////////////////////////
-async function deleteAllFromDB (e, id) {
+//exluir todos do DB -> preciso passar o 'id' aqui por meio do chamamento da função (toda 'div' já tem seu 'id' específico) /////////////////////////////////////////////////////////////
+async function deleteAll (e, id) {
   e.preventDefault();
 
-  await fetch(`${url}/${id}`)
+  await fetch(`${url}/${id}`, {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json;charset=UTF-8"},
+  })
 
+  addresses.innerHTML = ''
+  hiddenButton.setAttribute("hidden", "hidden");
 }
 
 
@@ -144,6 +145,6 @@ async function postData (address) {
   return
 }
 
-hiddenButton.addEventListener("click", deleteAllFromTable)
+hiddenButton.addEventListener("click", deleteAll)
 btn.addEventListener("click", consult)
 getRenderData()
