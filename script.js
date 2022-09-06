@@ -49,20 +49,21 @@ const populateTable = (address) => {
 
 
 
-  //exluir 1 (só passar o 'remove()') ///////////////////////////////////////////////////////////////////////////
+  //exluir 1 (preciso passar o 'id' aqui por meio do chamamento da função (toda 'div' já tem seu 'id' específico)) //////////////////////////////////////////////////////////////////////
   //alinhar /////////////////////////////////////////////////////////////////////////// 
 
-//exluir todos do DB -> preciso passar o 'id' aqui por meio do chamamento da função (toda 'div' já tem seu 'id' específico) /////////////////////////////////////////////////////////////
-async function deleteAll (e, id) {
+//exluir todos do DB ->  /////////////////////////////////////////////////////////////
+async function deleteAll (e) {
   e.preventDefault();
 
-  await fetch(`${url}/${id}`, {
+  await fetch(`${url}`, {
     method: "DELETE",
     headers: {"Content-Type": "application/json;charset=UTF-8"},
   })
+  .then(res => res)
 
-  addresses.innerHTML = ''
-  hiddenButton.setAttribute("hidden", "hidden");
+  // addresses.innerHTML = ''
+  // hiddenButton.setAttribute("hidden", "hidden");
 }
 
 
@@ -134,7 +135,6 @@ async function postData (address) {
         if (!data.cep){
           return error.innerText = 'Insira um CEP válido'
         } else {
-          // populateTable(data)
           postData(data)
         }
       })
